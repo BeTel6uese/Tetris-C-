@@ -1,0 +1,7 @@
+C:\Users\hriti\OneDrive\Desktop\C# Projects\Tetris\Tetris\obj\Debug\Tetris.csproj.AssemblyReference.cache
+C:\Users\hriti\OneDrive\Desktop\C# Projects\Tetris\Tetris\obj\Debug\Tetris.csproj.CoreCompileInputs.cache
+C:\Users\hriti\OneDrive\Desktop\C# Projects\Tetris\Tetris\bin\Debug\Tetris.exe.config
+C:\Users\hriti\OneDrive\Desktop\C# Projects\Tetris\Tetris\bin\Debug\Tetris.exe
+C:\Users\hriti\OneDrive\Desktop\C# Projects\Tetris\Tetris\bin\Debug\Tetris.pdb
+C:\Users\hriti\OneDrive\Desktop\C# Projects\Tetris\Tetris\obj\Debug\Tetris.exe
+C:\Users\hriti\OneDrive\Desktop\C# Projects\Tetris\Tetris\obj\Debug\Tetris.pdb
