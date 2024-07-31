@@ -1,4 +1,4 @@
-# Tetris-C-
+# Tetris-C#-
 Classic Tetris code in C#, console
 
 ## Description
