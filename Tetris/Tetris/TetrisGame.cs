@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 
 public class TetrisGame
@@ -25,46 +25,92 @@ public class TetrisGame
     {
         board = new TetrisBoard();
         score = 0;
-        lastFallTime = DateTime.Now;
+        lastFallTime = DateTime.Now;  // Initialize the fall timer
     }
 
     public void Start()
     {
-        board.Initialize();
-        if (!StartNewPiece())
-        {
-            Console.Clear();
-            Console.WriteLine("Game Over!");
-            return;
-        }
-
         while (true)
         {
-            if (Console.KeyAvailable)
+            ShowWelcomeMessage();
+            Console.Clear();
+            board.Initialize();
+            score = 0;
+            if (!StartNewPiece())
             {
-                var key = Console.ReadKey(true).Key;
-                HandleInput(key);
-            }
-
-            if ((DateTime.Now - lastFallTime).TotalMilliseconds >= 500)
-            {
-                lastFallTime = DateTime.Now;
-                AutoFall();
-            }
-
-            if (pieceSettled)
-            {
-                pieceSettled = false;
-                score += board.ClearLines() * 100;
-                if (!StartNewPiece())
+                ShowGameOverMessage();
+                if (!Replay())
                 {
-                    Console.Clear();
-                    Console.WriteLine("Game Over!");
                     break;
                 }
-                Redraw();
+                continue;
+            }
+
+            while (true)
+            {
+                // Handle user input
+                if (Console.KeyAvailable)
+                {
+                    var key = Console.ReadKey(true).Key;
+                    HandleInput(key);
+                }
+
+                // Handle auto-fall based on time elapsed
+                if ((DateTime.Now - lastFallTime).TotalMilliseconds >= 500)
+                {
+                    lastFallTime = DateTime.Now;  // Reset the fall timer
+                    AutoFall();
+                }
+
+                // Handle piece settling
+                if (pieceSettled)
+                {
+                    pieceSettled = false;
+                    score += board.ClearLines() * 100;
+                    if (!StartNewPiece())
+                    {
+                        ShowGameOverMessage();
+                        if (!Replay())
+                        {
+                            return;
+                        }
+                        break;
+                    }
+                    Redraw();
+                }
             }
         }
+    }
+
+    private void ShowWelcomeMessage()
+    {
+        Console.Clear();
+        string welcomeMessage = @"
+ __      __       .__                                  __           ___________     __         .__        
+/  \    /  \ ____ |  |   ____  ____   _____   ____   _/  |_  ____   \__    ___/____/  |________|__| ______
+\   \/\/   // __ \|  | _/ ___\/  _ \ /     \_/ __ \  \   __\/  _ \    |    |_/ __ \   __\_  __ \  |/  ___/
+ \        /\  ___/|  |_\  \__(  <_> )  Y Y  \  ___/   |  | (  <_> )   |    |\  ___/|  |  |  | \/  |\___ \ 
+  \__/\  /  \___  >____/\___  >____/|__|_|  /\___  >  |__|  \____/    |____| \___  >__|  |__|  |__/____  >
+       \/       \/          \/            \/     \/                              \/                    \/ 
+           ";
+        Console.WriteLine(welcomeMessage);
+        Console.WriteLine("Press any key to start playing...");
+        Console.ReadKey(true);
+    }
+
+
+    private void ShowGameOverMessage()
+    {
+        Console.Clear();
+        Console.WriteLine("Game Over!");
+        Console.WriteLine($"Your score: {score}");
+        Console.WriteLine("Press any key to replay or Esc to exit...");
+    }
+
+    private bool Replay()
+    {
+        var key = Console.ReadKey(true).Key;
+        return key != ConsoleKey.Escape;
     }
 
     private void HandleInput(ConsoleKey key)
